@@ -1,6 +1,6 @@
 # mlops-spark
 
-
+Run your Spark cluster as a collection of Neuro jobs
 
 
 ## Quick Start
@@ -13,8 +13,9 @@ Then run:
 pip install -U pipx
 pipx install neuro-all
 neuro login
-neuro-flow build train
-neuro-flow run jupyter
+neuro-flow build main
+neuro-flow run master
+neuro-flow run worker
 ```
 
 See [Help.md](HELP.md) for the detailed Neuro Project Template Reference.
