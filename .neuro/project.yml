@@ -1,0 +1,35 @@
+id: mlops_spark
+project_name: yevheniisemendiak
+
+images:
+  main:
+    ref: image:/$[[ project.project_name ]]/$[[ flow.project_id ]]:v1
+    dockerfile: $[[ flow.workspace ]]/Dockerfile
+    context: $[[ flow.workspace ]]/
+
+volumes:
+  spark_apps:
+    remote: storage:/$[[ project.project_name ]]/$[[ flow.project_id ]]/spark-apps
+    mount: /opt/spark-apps
+    local: modules
+  spark_data:
+    remote: storage:/$[[ project.project_name ]]/$[[ flow.project_id ]]/spark-data
+    mount: /opt/spark-data
+    local: data
+  spark_logs:
+    remote: storage:/$[[ project.project_name ]]/$[[ flow.project_id ]]/spark-data
+    mount: /opt/spark/logs
+    local: logs
+  project:
+    remote: storage:/$[[ project.project_name ]]/$[[ flow.project_id ]]
+    mount: /project
+    local: .
+
+mixins:
+  base_spark_job:
+    image: $[[ images.main.ref ]]
+    life_span: 10d
+    volumes:
+      - $[[ volumes.spark_apps.ref_rw ]]
+      - $[[ volumes.spark_data.ref_rw ]]
+    http_port: 8080

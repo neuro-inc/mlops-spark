@@ -1,0 +1,39 @@
+kind: live
+title: mlops-spark
+
+defaults:
+  life_span: 1d
+
+jobs:
+  master:
+    mixins: [base_spark_job]
+    detach: True
+    env:
+      SPARK_WORKLOAD: master
+    bash: |
+      export SPARK_LOCAL_IP=$NEURO_JOB_INTERNAL_HOSTNAME_NAMED
+      export SPARK_MASTER_HOST=$NEURO_JOB_INTERNAL_HOSTNAME_NAMED
+      cd /opt/spark/bin
+      ./spark-class org.apache.spark.deploy.master.Master \
+        --ip $NEURO_JOB_INTERNAL_HOSTNAME_NAMED \
+        --port $SPARK_MASTER_PORT \
+        --webui-port $SPARK_MASTER_WEBUI_PORT \
+        >> $SPARK_MASTER_LOG
+
+  worker:
+    mixins: [base_spark_job]
+    detach: True
+    multi: True
+    env:
+      SPARK_WORKLOAD: worker
+    bash: |
+      export SPARK_LOCAL_IP=$NEURO_JOB_INTERNAL_HOSTNAME_NAMED
+      export SPARK_MASTER=spark://${{ inspect_job('master').internal_hostname_named }}:7077
+      $[[ volumes.spark_apps.mount ]]/start-spark.sh
+
+  workload:
+    mixins: [base_spark_job]
+    bash: |
+      export SPARK_MASTER=spark://${{ inspect_job('master').internal_hostname_named }}:7077
+      cd /opt/spark/bin
+      ./spark-submit --master $SPARK_MASTER --name spark-pi --class org.apache.spark.examples.SparkPi  local:///opt/spark/examples/jars/spark-examples_2.12-3.4.0.jar 100
