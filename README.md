@@ -16,6 +16,7 @@ neuro login
 neuro-flow build main
 neuro-flow run master
 neuro-flow run worker
+neuro-flow run workload
 ```
 
 See [Help.md](HELP.md) for the detailed Neuro Project Template Reference.
