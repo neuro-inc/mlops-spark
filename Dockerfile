@@ -1,5 +1,5 @@
 # builder step used to download and configure spark environment
-FROM openjdk:11.0.11-jre-slim-buster as builder
+FROM openjdk:11.0.16-jre-slim-buster as builder
 
 # Add Dependencies for PySpark
 RUN apt-get update && \
