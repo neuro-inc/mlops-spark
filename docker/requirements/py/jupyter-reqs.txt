@@ -1,0 +1,2 @@
+-r py-reqs.txt
+sparkmonitor==2.1.1  # extension to monitor spark
