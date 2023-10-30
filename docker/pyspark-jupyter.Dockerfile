@@ -7,6 +7,8 @@ RUN apt-get update -qq && apt-get install --no-install-recommends -y maven
 COPY requirements/java/pom.xml .
 RUN mvn dependency:copy-dependencies -DoutputDirectory=$SPARK_HOME/jars
 
+LABEL org.opencontainers.image.source = "https://github.com/neuro-inc/mlops-spark"
+
 # Alternative: use direct download 
 # RUN cd /opt/spark/jars && \
 # wget "https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.2.0/hadoop-aws-3.2.0.jar"
