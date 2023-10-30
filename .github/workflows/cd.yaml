@@ -39,7 +39,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t ${{ matrix.image}} -f docker/${{ matrix.image }} docker
+          docker build -t ${{ matrix.image}} -f docker/${{ matrix.image }}.Dockerfile docker
 
       - name: Push Docker Image
         run: |
