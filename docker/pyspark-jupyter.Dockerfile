@@ -3,7 +3,7 @@ FROM jupyter/pyspark-notebook:python-3.10
 
 # use Maven
 USER root
-RUN apt-get update -qq && apt-get install --no-install-recommends -y maven
+RUN apt-get update -qq && apt-get install --no-install-recommends -y maven rsync
 COPY requirements/java/pom.xml .
 RUN mvn dependency:copy-dependencies -DoutputDirectory=$SPARK_HOME/jars
 
