@@ -13,8 +13,8 @@ LABEL org.opencontainers.image.source = "https://github.com/neuro-inc/mlops-spar
 # RUN cd /opt/spark/jars && \
 # wget "https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.2.0/hadoop-aws-3.2.0.jar"
 
-USER $NB_USER
 RUN mkdir -p /var/notebooks
+USER $NB_USER
 COPY README.ipynb /var/notebooks
 
 COPY requirements/py py-requirements
