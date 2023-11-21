@@ -19,6 +19,7 @@ RUN mkdir -p /var/notebooks
 COPY README.ipynb /var/notebooks
 
 ENV PYTHONPATH="${SPARK_HOME}/python:${SPARK_HOME}/python/lib/py4j-0.10.9.7-src.zip:${PYTHONPATH}"
+ENV HOME=/root
 
 COPY requirements/py py-requirements
 RUN pip install --no-cache-dir -r py-requirements/jupyter-reqs.txt && \
