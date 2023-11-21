@@ -18,11 +18,12 @@ RUN mkdir -p /var/notebooks
 # USER $NB_USER
 COPY README.ipynb /var/notebooks
 
+RUN echo "source /usr/local/bin/before-notebook.d/spark-config.sh" >> ~/.bashrc
+
 COPY requirements/py py-requirements
 RUN pip install --no-cache-dir -r py-requirements/jupyter-reqs.txt && \
     ipython profile create && \
     echo "c.InteractiveShellApp.extensions.append('sparkmonitor.kernelextension')" >> \
     $(ipython profile locate default)/ipython_kernel_config.py && \
     jupyter nbextension install sparkmonitor --py --user && \
-    jupyter nbextension enable  sparkmonitor --py --user && \
-    source /usr/local/bin/before-notebook.d/spark-config.sh
+    jupyter nbextension enable  sparkmonitor --py --user
