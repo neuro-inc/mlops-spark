@@ -18,7 +18,7 @@ RUN mkdir -p /var/notebooks
 # USER $NB_USER
 COPY README.ipynb /var/notebooks
 
-RUN echo "source /usr/local/bin/before-notebook.d/spark-config.sh" >> ~/.bashrc
+ENV PYTHONPATH="${SPARK_HOME}/python:${SPARK_HOME}/python/lib/py4j-0.10.9.7-src.zip:${PYTHONPATH}"
 
 COPY requirements/py py-requirements
 RUN pip install --no-cache-dir -r py-requirements/jupyter-reqs.txt && \
